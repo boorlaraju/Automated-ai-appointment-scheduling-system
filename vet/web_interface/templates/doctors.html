@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">
+                    <i class="fas fa-user-md me-2"></i>Our Veterinary Team
+                </h3>
+                <span class="badge bg-primary">{{ doctors|length }} Doctors</span>
+            </div>
+            <div class="card-body">
+                {% if doctors %}
+                <div class="row">
+                    {% for doctor in doctors %}
+                    <div class="col-md-6 col-lg-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-user-md fa-3x text-primary"></i>
+                                </div>
+                                <h5 class="card-title">{{ doctor.name }}</h5>
+                                <p class="text-muted">{{ doctor.specialty }}</p>
+                                <div class="mb-3">
+                                    <span class="badge bg-info">{{ doctor.experience_years }} years experience</span>
+                                </div>
+                                <div class="d-grid">
+                                    <button class="btn btn-outline-primary btn-sm" onclick="viewDoctorSchedule({{ doctor.id }})">
+                                        <i class="fas fa-calendar me-1"></i>View Schedule
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-user-md fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No Doctors Available</h5>
+                    <p class="text-muted">Doctor information is not available at the moment.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-pie me-2"></i>Specialty Distribution
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if doctors %}
+                <canvas id="specialtyChart" width="400" height="200"></canvas>
+                {% else %}
+                <p class="text-muted">No data available</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-clock me-2"></i>Availability Overview
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="availabilityOverview">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin fa-2x text-muted"></i>
+                        <p class="text-muted mt-2">Loading availability data...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Doctor Schedule Modal -->
+<div class="modal fade" id="scheduleModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-calendar me-2"></i>Doctor Schedule
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="scheduleContent">
+                <!-- Schedule will be populated here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Load availability data on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadAvailabilityData();
+    {% if doctors %}
+    createSpecialtyChart();
+    {% endif %}
+});
+
+function loadAvailabilityData() {
+    fetch('/api/status')
+        .then(response => response.json())
+        .then(data => {
+            const overview = document.getElementById('availabilityOverview');
+            overview.innerHTML = `
+                <div class="row text-center">
+                    <div class="col-6">
+                        <div class="metric-card bg-primary text-white p-3 rounded">
+                            <h4>${data.available_slots || 0}</h4>
+                            <small>Available Slots</small>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="metric-card bg-success text-white p-3 rounded">
+                            <h4>${data.total_appointments || 0}</h4>
+                            <small>Total Appointments</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+        })
+        .catch(error => {
+            document.getElementById('availabilityOverview').innerHTML = `
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Unable to load availability data
+                </div>
+            `;
+        });
+}
+
+function createSpecialtyChart() {
+    const specialties = {};
+    {% for doctor in doctors %}
+    const specialty = '{{ doctor.specialty }}';
+    specialties[specialty] = (specialties[specialty] || 0) + 1;
+    {% endfor %}
+    
+    const ctx = document.getElementById('specialtyChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: Object.keys(specialties),
+            datasets: [{
+                data: Object.values(specialties),
+                backgroundColor: [
+                    '#FF6384',
+                    '#36A2EB',
+                    '#FFCE56',
+                    '#4BC0C0',
+                    '#9966FF',
+                    '#FF9F40'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+
+function viewDoctorSchedule(doctorId) {
+    // This would typically fetch the doctor's schedule from the server
+    const content = `
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            Doctor schedule functionality would be implemented here.
+            <br>This would show the doctor's availability and booked appointments.
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Today's Schedule</h6>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>9:00 AM - 9:30 AM</span>
+                        <span class="badge bg-success">Available</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>9:30 AM - 10:00 AM</span>
+                        <span class="badge bg-danger">Booked</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>10:00 AM - 10:30 AM</span>
+                        <span class="badge bg-success">Available</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>Statistics</h6>
+                <ul class="list-unstyled">
+                    <li><strong>Total Slots Today:</strong> 8</li>
+                    <li><strong>Booked:</strong> 3</li>
+                    <li><strong>Available:</strong> 5</li>
+                    <li><strong>Utilization:</strong> 37.5%</li>
+                </ul>
+            </div>
+        </div>
+    `;
+    
+    document.getElementById('scheduleContent').innerHTML = content;
+    new bootstrap.Modal(document.getElementById('scheduleModal')).show();
+}
+</script>
+{% endblock %}

@@ -1,0 +1,22 @@
+# Team_Vet - Veterinary Management System
+# Core Dependencies
+
+# Data Science & ML
+pandas>=1.5.0
+numpy>=1.21.0
+scikit-learn>=1.1.0
+joblib>=1.2.0
+python-dateutil>=2.8.0
+
+# Web Framework
+flask>=2.0.0
+flask-cors>=3.0.0
+
+# Additional Utilities
+requests>=2.25.0
+python-dotenv>=0.19.0
+
+# Optional: For enhanced features
+# matplotlib>=3.5.0  # For advanced analytics charts
+# seaborn>=0.11.0    # For statistical visualizations
+# plotly>=5.0.0      # For interactive charts

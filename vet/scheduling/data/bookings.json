@@ -1,0 +1,26 @@
+[
+  {
+    "booking_id": 1,
+    "slot_id": 1,
+    "patient_name": "John Doe",
+    "pet_name": "Buddy",
+    "pet_type": "Dog",
+    "appointment_type": "Checkup",
+    "urgency": "Medium",
+    "notes": "Regular checkup",
+    "booked_at": "2025-10-23T15:23:43.638130",
+    "status": "confirmed"
+  },
+  {
+    "booking_id": 2,
+    "slot_id": 5,
+    "patient_name": "Jane Smith",
+    "pet_name": "Whiskers",
+    "pet_type": "Cat",
+    "appointment_type": "Vaccination",
+    "urgency": "Low",
+    "notes": "Annual vaccination",
+    "booked_at": "2025-10-23T15:23:43.638130",
+    "status": "confirmed"
+  }
+]

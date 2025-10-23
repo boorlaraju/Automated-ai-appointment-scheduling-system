@@ -1,0 +1,572 @@
+[
+  {
+    "slot_id": 1,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-23T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 2,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-23T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 3,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-23T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 4,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-24T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 5,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-24T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 6,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-24T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 7,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-25T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 8,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-25T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 9,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-25T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 10,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-26T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 11,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-26T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 12,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-26T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 13,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-27T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 14,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-27T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 15,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-27T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 16,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-28T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 17,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-28T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 18,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-28T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 19,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-29T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 20,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-29T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 21,
+    "doctor_id": 1,
+    "doctor_name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "datetime": "2025-10-29T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 22,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-23T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 23,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-23T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 24,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-23T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 25,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-24T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 26,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-24T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 27,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-24T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 28,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-25T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 29,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-25T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 30,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-25T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 31,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-26T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 32,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-26T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 33,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-26T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 34,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-27T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 35,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-27T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 36,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-27T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 37,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-28T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 38,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-28T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 39,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-28T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 40,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-29T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 41,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-29T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 42,
+    "doctor_id": 2,
+    "doctor_name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "datetime": "2025-10-29T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 43,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-23T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 44,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-23T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 45,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-23T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 46,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-24T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 47,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-24T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 48,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-24T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 49,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-27T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 50,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-27T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 51,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-27T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 52,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-28T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 53,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-28T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 54,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-28T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 55,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-29T13:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 56,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-29T14:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  },
+  {
+    "slot_id": 57,
+    "doctor_id": 3,
+    "doctor_name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "datetime": "2025-10-29T15:00:00",
+    "duration_minutes": 30,
+    "is_available": true,
+    "slot_type": "regular"
+  }
+]

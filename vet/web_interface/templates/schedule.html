@@ -1,0 +1,327 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">
+                    <i class="fas fa-calendar-plus me-2"></i>Schedule New Appointment
+                </h3>
+            </div>
+            <div class="card-body">
+                <form id="appointmentForm">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="patientName" class="form-label">Patient Name</label>
+                                <input type="text" class="form-control" id="patientName" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="petName" class="form-label">Pet Name</label>
+                                <input type="text" class="form-control" id="petName" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="petType" class="form-label">Pet Type</label>
+                                <select class="form-select" id="petType" required>
+                                    <option value="">Select Pet Type</option>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                    <option value="Bird">Bird</option>
+                                    <option value="Rabbit">Rabbit</option>
+                                    <option value="Hamster">Hamster</option>
+                                    <option value="Fish">Fish</option>
+                                    <option value="Reptile">Reptile</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="appointmentType" class="form-label">Appointment Type</label>
+                                <select class="form-select" id="appointmentType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Checkup">Checkup</option>
+                                    <option value="Vaccination">Vaccination</option>
+                                    <option value="Surgery">Surgery</option>
+                                    <option value="Emergency">Emergency</option>
+                                    <option value="Follow-up">Follow-up</option>
+                                    <option value="Grooming">Grooming</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="urgency" class="form-label">Urgency Level</label>
+                                <select class="form-select" id="urgency" required>
+                                    <option value="">Select Urgency</option>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="High">High</option>
+                                    <option value="Emergency">Emergency</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="duration" class="form-label">Preferred Duration (minutes)</label>
+                                <select class="form-select" id="duration">
+                                    <option value="30">30 minutes</option>
+                                    <option value="45">45 minutes</option>
+                                    <option value="60">60 minutes</option>
+                                    <option value="90">90 minutes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" rows="3" placeholder="Any additional information..."></textarea>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-outline-primary" onclick="getRecommendations()">
+                            <i class="fas fa-lightbulb me-2"></i>Get Recommendations
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-calendar-check me-2"></i>Schedule Appointment
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-lightbulb me-2"></i>AI Recommendations
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="recommendations">
+                    <p class="text-muted">Fill out the form and click "Get Recommendations" to see AI-powered scheduling suggestions.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mt-3">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>How It Works
+                </h5>
+            </div>
+            <div class="card-body">
+                <ol class="small">
+                    <li class="mb-2">Our AI analyzes your appointment details</li>
+                    <li class="mb-2">It considers doctor availability and expertise</li>
+                    <li class="mb-2">ML models predict success probability</li>
+                    <li class="mb-2">Best time slots are recommended</li>
+                    <li class="mb-2">You can choose from multiple options</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4" id="results" style="display: none;">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-check-circle me-2"></i>Scheduling Results
+                </h5>
+            </div>
+            <div class="card-body" id="resultsContent">
+                <!-- Results will be populated here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    scheduleAppointment();
+});
+
+function getRecommendations() {
+    const formData = getFormData();
+    
+    if (!validateForm(formData)) {
+        alert('Please fill in all required fields');
+        return;
+    }
+    
+    const recommendationsDiv = document.getElementById('recommendations');
+    recommendationsDiv.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Getting recommendations...</div>';
+    
+    fetch('/recommendations', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            displayRecommendations(data.recommendations);
+        } else {
+            recommendationsDiv.innerHTML = '<div class="alert alert-danger">Error: ' + data.message + '</div>';
+        }
+    })
+    .catch(error => {
+        recommendationsDiv.innerHTML = '<div class="alert alert-danger">Error: ' + error.message + '</div>';
+    });
+}
+
+function scheduleAppointment() {
+    const formData = getFormData();
+    
+    if (!validateForm(formData)) {
+        alert('Please fill in all required fields');
+        return;
+    }
+    
+    const submitButton = document.querySelector('button[type="submit"]');
+    const originalText = submitButton.innerHTML;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Scheduling...';
+    submitButton.disabled = true;
+    
+    fetch('/schedule', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        displayResults(data);
+    })
+    .catch(error => {
+        displayResults({success: false, message: 'Error: ' + error.message});
+    })
+    .finally(() => {
+        submitButton.innerHTML = originalText;
+        submitButton.disabled = false;
+    });
+}
+
+function getFormData() {
+    return {
+        patient_name: document.getElementById('patientName').value,
+        pet_name: document.getElementById('petName').value,
+        pet_type: document.getElementById('petType').value,
+        appointment_type: document.getElementById('appointmentType').value,
+        urgency: document.getElementById('urgency').value,
+        duration_minutes: parseInt(document.getElementById('duration').value),
+        notes: document.getElementById('notes').value
+    };
+}
+
+function validateForm(data) {
+    return data.patient_name && data.pet_name && data.pet_type && 
+           data.appointment_type && data.urgency;
+}
+
+function displayRecommendations(recommendations) {
+    const recommendationsDiv = document.getElementById('recommendations');
+    
+    if (recommendations.length === 0) {
+        recommendationsDiv.innerHTML = '<div class="alert alert-warning">No recommendations available</div>';
+        return;
+    }
+    
+    let html = '<div class="list-group">';
+    recommendations.forEach((rec, index) => {
+        const date = new Date(rec.datetime);
+        const successRate = (rec.success_probability * 100).toFixed(1);
+        const duration = rec.predicted_duration.toFixed(0);
+        
+        html += `
+            <div class="list-group-item">
+                <div class="d-flex w-100 justify-content-between">
+                    <h6 class="mb-1">${rec.doctor_name}</h6>
+                    <small class="text-success">${successRate}% success</small>
+                </div>
+                <p class="mb-1">
+                    <i class="fas fa-calendar me-1"></i>${date.toLocaleDateString()}
+                    <i class="fas fa-clock me-1 ms-2"></i>${date.toLocaleTimeString()}
+                </p>
+                <small>
+                    <i class="fas fa-user-md me-1"></i>${rec.specialty} | 
+                    <i class="fas fa-stopwatch me-1"></i>${duration} min | 
+                    <i class="fas fa-star me-1"></i>Score: ${rec.recommendation_score.toFixed(2)}
+                </small>
+            </div>
+        `;
+    });
+    html += '</div>';
+    
+    recommendationsDiv.innerHTML = html;
+}
+
+function displayResults(data) {
+    const resultsDiv = document.getElementById('results');
+    const resultsContent = document.getElementById('resultsContent');
+    
+    if (data.success) {
+        const booking = data.booking;
+        const slot = data.slot;
+        const predictions = data.ml_predictions;
+        
+        resultsContent.innerHTML = `
+            <div class="alert alert-success">
+                <h5><i class="fas fa-check-circle me-2"></i>Appointment Scheduled Successfully!</h5>
+                <p><strong>Booking ID:</strong> ${booking.booking_id}</p>
+                <p><strong>Patient:</strong> ${booking.patient_name} (${booking.pet_name})</p>
+                <p><strong>Doctor:</strong> ${slot.doctor_name} - ${slot.specialty}</p>
+                <p><strong>Date & Time:</strong> ${new Date(slot.datetime).toLocaleString()}</p>
+                <p><strong>Duration:</strong> ${slot.duration_minutes} minutes</p>
+                <hr>
+                <h6>AI Predictions:</h6>
+                <ul>
+                    <li><strong>Success Probability:</strong> ${(predictions.success_probability * 100).toFixed(1)}%</li>
+                    <li><strong>Predicted Duration:</strong> ${predictions.predicted_duration.toFixed(0)} minutes</li>
+                    <li><strong>Recommendation Score:</strong> ${predictions.recommendation_score.toFixed(2)}</li>
+                </ul>
+            </div>
+        `;
+    } else {
+        resultsContent.innerHTML = `
+            <div class="alert alert-danger">
+                <h5><i class="fas fa-exclamation-triangle me-2"></i>Scheduling Failed</h5>
+                <p>${data.message}</p>
+                ${data.recommendations ? `
+                    <h6>Alternative Options:</h6>
+                    <div class="list-group">
+                        ${data.recommendations.slice(0, 3).map(rec => `
+                            <div class="list-group-item">
+                                <strong>${rec.doctor_name}</strong> - ${new Date(rec.datetime).toLocaleString()}
+                                <br><small>Success Rate: ${(rec.success_probability * 100).toFixed(1)}%</small>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            </div>
+        `;
+    }
+    
+    resultsDiv.style.display = 'block';
+    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+{% endblock %}

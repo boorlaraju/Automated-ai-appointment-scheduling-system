@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">
+                    <i class="fas fa-calendar-alt me-2"></i>All Appointments
+                </h3>
+                <span class="badge bg-primary">{{ appointments|length }} Total</span>
+            </div>
+            <div class="card-body">
+                {% if appointments %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Booking ID</th>
+                                <th>Patient</th>
+                                <th>Pet</th>
+                                <th>Doctor</th>
+                                <th>Date & Time</th>
+                                <th>Type</th>
+                                <th>Urgency</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for appointment in appointments %}
+                            <tr>
+                                <td><strong>#{{ appointment.booking.booking_id }}</strong></td>
+                                <td>{{ appointment.booking.patient_name }}</td>
+                                <td>
+                                    <i class="fas fa-paw me-1"></i>{{ appointment.booking.pet_name }}
+                                    <br><small class="text-muted">{{ appointment.booking.pet_type }}</small>
+                                </td>
+                                <td>
+                                    <strong>{{ appointment.slot.doctor_name }}</strong>
+                                    <br><small class="text-muted">{{ appointment.slot.specialty }}</small>
+                                </td>
+                                <td>
+                                    <i class="fas fa-calendar me-1"></i>{{ appointment.start_time.strftime('%Y-%m-%d') }}
+                                    <br><i class="fas fa-clock me-1"></i>{{ appointment.start_time.strftime('%H:%M') }} - {{ appointment.end_time.strftime('%H:%M') }}
+                                </td>
+                                <td>
+                                    <span class="badge bg-info">{{ appointment.booking.appointment_type }}</span>
+                                </td>
+                                <td>
+                                    {% if appointment.booking.urgency == 'Emergency' %}
+                                        <span class="badge bg-danger">Emergency</span>
+                                    {% elif appointment.booking.urgency == 'High' %}
+                                        <span class="badge bg-warning">High</span>
+                                    {% elif appointment.booking.urgency == 'Medium' %}
+                                        <span class="badge bg-primary">Medium</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Low</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if appointment.booking.status == 'confirmed' %}
+                                        <span class="badge bg-success">Confirmed</span>
+                                    {% elif appointment.booking.status == 'rescheduled' %}
+                                        <span class="badge bg-warning">Rescheduled</span>
+                                    {% elif appointment.booking.status == 'cancelled' %}
+                                        <span class="badge bg-danger">Cancelled</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">{{ appointment.booking.status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button class="btn btn-outline-primary" onclick="viewDetails({{ appointment.booking.booking_id }})">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-outline-warning" onclick="rescheduleAppointment({{ appointment.booking.booking_id }})">
+                                            <i class="fas fa-calendar-alt"></i>
+                                        </button>
+                                        <button class="btn btn-outline-danger" onclick="cancelAppointment({{ appointment.booking.booking_id }})">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No Appointments Found</h5>
+                    <p class="text-muted">There are no appointments scheduled yet.</p>
+                    <a href="{{ url_for('schedule_appointment') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Schedule First Appointment
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Appointment Details Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-info-circle me-2"></i>Appointment Details
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="detailsContent">
+                <!-- Details will be populated here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Reschedule Modal -->
+<div class="modal fade" id="rescheduleModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-calendar-alt me-2"></i>Reschedule Appointment
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="rescheduleContent">
+                    <!-- Reschedule options will be populated here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="confirmReschedule()">Reschedule</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewDetails(bookingId) {
+    // Find appointment data
+    const appointment = getAppointmentById(bookingId);
+    if (!appointment) return;
+    
+    const content = `
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Patient Information</h6>
+                <ul class="list-unstyled">
+                    <li><strong>Name:</strong> ${appointment.booking.patient_name}</li>
+                    <li><strong>Pet:</strong> ${appointment.booking.pet_name} (${appointment.booking.pet_type})</li>
+                    <li><strong>Appointment Type:</strong> ${appointment.booking.appointment_type}</li>
+                    <li><strong>Urgency:</strong> ${appointment.booking.urgency}</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h6>Schedule Information</h6>
+                <ul class="list-unstyled">
+                    <li><strong>Doctor:</strong> ${appointment.slot.doctor_name}</li>
+                    <li><strong>Specialty:</strong> ${appointment.slot.specialty}</li>
+                    <li><strong>Date:</strong> ${appointment.start_time.toLocaleDateString()}</li>
+                    <li><strong>Time:</strong> ${appointment.start_time.toLocaleTimeString()} - ${appointment.end_time.toLocaleTimeString()}</li>
+                    <li><strong>Duration:</strong> ${appointment.slot.duration_minutes} minutes</li>
+                </ul>
+            </div>
+        </div>
+        ${appointment.booking.notes ? `
+        <div class="row mt-3">
+            <div class="col-12">
+                <h6>Notes</h6>
+                <p class="text-muted">${appointment.booking.notes}</p>
+            </div>
+        </div>
+        ` : ''}
+    `;
+    
+    document.getElementById('detailsContent').innerHTML = content;
+    new bootstrap.Modal(document.getElementById('detailsModal')).show();
+}
+
+function rescheduleAppointment(bookingId) {
+    // This would typically fetch available slots for rescheduling
+    const content = `
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle me-2"></i>
+            Rescheduling functionality would be implemented here.
+            <br>This would show available alternative time slots for the appointment.
+        </div>
+    `;
+    
+    document.getElementById('rescheduleContent').innerHTML = content;
+    new bootstrap.Modal(document.getElementById('rescheduleModal')).show();
+}
+
+function cancelAppointment(bookingId) {
+    if (confirm('Are you sure you want to cancel this appointment?')) {
+        // This would typically make an API call to cancel the appointment
+        alert('Appointment cancellation would be implemented here.');
+        // For now, just show a message
+        location.reload();
+    }
+}
+
+function confirmReschedule() {
+    // This would implement the actual rescheduling logic
+    alert('Rescheduling confirmed!');
+    new bootstrap.Modal(document.getElementById('rescheduleModal')).hide();
+    location.reload();
+}
+
+function getAppointmentById(bookingId) {
+    // This would typically fetch from the server
+    // For now, we'll simulate finding the appointment
+    const appointments = {{ appointments|tojson }};
+    return appointments.find(apt => apt.booking.booking_id === bookingId);
+}
+
+// Auto-refresh every 30 seconds
+setInterval(function() {
+    location.reload();
+}, 30000);
+</script>
+{% endblock %}

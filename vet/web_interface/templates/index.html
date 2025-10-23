@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                </h3>
+            </div>
+            <div class="card-body">
+                {% if not scheduling_available %}
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>Warning:</strong> Scheduling modules are not available. Please check your installation.
+                </div>
+                {% endif %}
+
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card metric-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-calendar-check fa-2x mb-2"></i>
+                                <div class="metric-value" id="total-appointments">{{ system_status.total_appointments }}</div>
+                                <div>Total Appointments</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card metric-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-clock fa-2x mb-2"></i>
+                                <div class="metric-value" id="available-slots">{{ system_status.available_slots }}</div>
+                                <div>Available Slots</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card metric-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-robot fa-2x mb-2"></i>
+                                <div class="metric-value">
+                                    <span class="status-indicator {% if system_status.models_trained %}status-online{% else %}status-offline{% endif %}"></span>
+                                    {% if system_status.models_trained %}AI{% else %}Off{% endif %}
+                                </div>
+                                <div>ML Models</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card metric-card">
+                            <div class="card-body text-center">
+                                <i class="fas fa-server fa-2x mb-2"></i>
+                                <div class="metric-value">
+                                    <span class="status-indicator {% if system_status.scheduler_initialized %}status-online{% else %}status-warning{% endif %}"></span>
+                                    {% if system_status.scheduler_initialized %}Ready{% else %}Init{% endif %}
+                                </div>
+                                <div>System Status</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if not system_status.scheduler_initialized %}
+                <div class="alert alert-info">
+                    <h5><i class="fas fa-info-circle me-2"></i>System Initialization Required</h5>
+                    <p>Before you can schedule appointments, you need to initialize the system. This will:</p>
+                    <ul>
+                        <li>Generate training data</li>
+                        <li>Train ML models</li>
+                        <li>Set up availability slots</li>
+                        <li>Prepare the scheduling engine</li>
+                    </ul>
+                    <button class="btn btn-primary" onclick="initializeSystem()">
+                        <i class="fas fa-play me-2"></i>Initialize System
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card feature-card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-calendar-plus me-2"></i>Quick Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('schedule_appointment') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Schedule New Appointment
+                    </a>
+                    <a href="{{ url_for('view_appointments') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-list me-2"></i>View All Appointments
+                    </a>
+                    <a href="{{ url_for('view_doctors') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-user-md me-2"></i>Manage Doctors
+                    </a>
+                    <a href="{{ url_for('analytics') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-chart-bar me-2"></i>View Analytics
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card feature-card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-cogs me-2"></i>System Features
+                </h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>AI-Powered Scheduling:</strong> ML-based appointment recommendations
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Automatic Conflict Resolution:</strong> Smart conflict detection and resolution
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Real-time Availability:</strong> Live doctor schedule management
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Analytics Dashboard:</strong> Performance metrics and insights
+                    </li>
+                    <li class="mb-2">
+                        <i class="fas fa-check text-success me-2"></i>
+                        <strong>Rescheduling:</strong> Easy appointment modifications
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>System Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>System Status</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Scheduling Available:</strong> 
+                                <span class="badge {% if system_status.scheduling_available %}bg-success{% else %}bg-danger{% endif %}">
+                                    {% if system_status.scheduling_available %}Yes{% else %}No{% endif %}
+                                </span>
+                            </li>
+                            <li><strong>Scheduler Initialized:</strong> 
+                                <span class="badge {% if system_status.scheduler_initialized %}bg-success{% else %}bg-warning{% endif %}">
+                                    {% if system_status.scheduler_initialized %}Yes{% else %}No{% endif %}
+                                </span>
+                            </li>
+                            <li><strong>Models Trained:</strong> 
+                                <span class="badge {% if system_status.models_trained %}bg-success{% else %}bg-warning{% endif %}">
+                                    {% if system_status.models_trained %}Yes{% else %}No{% endif %}
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Quick Stats</h6>
+                        <ul class="list-unstyled">
+                            <li><strong>Total Appointments:</strong> {{ system_status.total_appointments }}</li>
+                            <li><strong>Available Slots:</strong> {{ system_status.available_slots }}</li>
+                            <li><strong>Data Path:</strong> {{ "Available" if system_status.data_path_exists else "Missing" }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function initializeSystem() {
+    const button = event.target;
+    const originalText = button.innerHTML;
+    
+    button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Initializing...';
+    button.disabled = true;
+    
+    fetch('/initialize')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('System initialized successfully!');
+                location.reload();
+            } else {
+                alert('Failed to initialize system: ' + data.message);
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+        })
+        .finally(() => {
+            button.innerHTML = originalText;
+            button.disabled = false;
+        });
+}
+</script>
+{% endblock %}

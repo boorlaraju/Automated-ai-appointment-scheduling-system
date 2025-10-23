@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "Dr. Sarah Johnson",
+    "specialty": "General Practice",
+    "experience_years": 8
+  },
+  {
+    "id": 2,
+    "name": "Dr. Michael Chen",
+    "specialty": "Surgery",
+    "experience_years": 12
+  },
+  {
+    "id": 3,
+    "name": "Dr. Emily Rodriguez",
+    "specialty": "Emergency",
+    "experience_years": 6
+  }
+]
