@@ -5,7 +5,7 @@
 
 ## 🧩 Problem Statement
 # Team-Vet
-# Raju , Ram singhth, Nagaraju , Mahesh , santhosh
+## Raju , Ram singhth, Nagaraju , Mahesh , santhosh
 
 In healthcare environments, managing doctor–patient appointments efficiently is a complex task due to:
 
